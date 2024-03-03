@@ -29,9 +29,9 @@ const EditBook = () => {
         alert("An error happened. Please Chack console");
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
-  const handleEditBook = () => {
+  function handleEditBook() {
     const data = {
       title,
       author,
@@ -51,7 +51,7 @@ const EditBook = () => {
         enqueueSnackbar("Error", { variant: "error" });
         console.log(error);
       });
-  };
+  }
 
   return (
     <div className="p-4">
