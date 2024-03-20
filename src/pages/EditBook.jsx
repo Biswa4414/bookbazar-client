@@ -16,6 +16,10 @@ const EditBook = () => {
 
   useEffect(() => {
     setLoading(true);
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (!isAuthenticated) {
+      navigate("/books/register");
+    }
     axios
       .get(`https://bookbazar-server.onrender.com/books/${id}`)
       .then((response) => {
@@ -26,7 +30,7 @@ const EditBook = () => {
       })
       .catch((error) => {
         setLoading(false);
-        alert("An error happened. Please Chack console");
+        alert("An error happened. Please Check console");
         console.log(error);
       });
   }, [id]);
@@ -43,7 +47,7 @@ const EditBook = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Book Edited successfully", { variant: "success" });
-        navigate("/");
+        navigate("/books");
       })
       .catch((error) => {
         setLoading(false);

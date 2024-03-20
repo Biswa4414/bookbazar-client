@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import BackButton from "../components/BackButton";
+
 const ShowBook = () => {
   const [book, setBook] = useState({});
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (!isAuthenticated) {
+      navigate("/books/register");
+    }
     axios
       .get(`https://bookbazar-server.onrender.com/books/${id}`)
       .then((res) => {
@@ -17,6 +23,7 @@ const ShowBook = () => {
         setLoading(false);
       })
       .catch((error) => {
+        alert("Book not found")
         console.log(error);
         setLoading(false);
       });
